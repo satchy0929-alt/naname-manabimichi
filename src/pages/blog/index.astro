@@ -1,0 +1,33 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+<BaseLayout title="記事一覧" description="通信制高校・サポート校・オルタナティブ教育に関する記事の一覧です。">
+  <div class="wrap">
+    <div class="hero">
+      <h1>記事一覧</h1>
+      <p>通信制高校やサポート校、オルタナティブ教育について書いた記事をまとめています。</p>
+    </div>
+    <div class="post-grid">
+      {posts.map((post) => {
+        const dateStr = new Intl.DateTimeFormat('ja-JP', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        }).format(post.data.pubDate);
+        return (
+          <div class="post-card">
+            <p class="cat">{post.data.category}</p>
+            <h3><a href={`/blog/${post.slug}/`}>{post.data.title}</a></h3>
+            <p>{post.data.description}</p>
+            <p class="date">{dateStr}</p>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</BaseLayout>

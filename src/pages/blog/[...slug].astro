@@ -1,0 +1,38 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+const dateStr = new Intl.DateTimeFormat('ja-JP', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+}).format(post.data.pubDate);
+---
+<BaseLayout title={post.data.title} description={post.data.description}>
+  <div class="wrap">
+    <div class="article-header">
+      <p class="cat">{post.data.category}</p>
+      <h1>{post.data.title}</h1>
+      <p class="meta">{dateStr} 更新</p>
+    </div>
+    <article class="article-body">
+      <Content />
+      <p class="disclosure">
+        本記事にはアフィリエイト広告（PR）を含む場合があります。詳しくは
+        <a href="/disclaimer/">免責事項・広告表記</a>をご覧ください。
+      </p>
+    </article>
+    <p><a href="/blog/">&larr; 記事一覧に戻る</a></p>
+  </div>
+</BaseLayout>

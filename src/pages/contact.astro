@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="お問い合わせ" description="「ナナメの学び路」へのお問い合わせページです。">
+  <div class="wrap">
+    <div class="hero">
+      <h1>お問い合わせ</h1>
+    </div>
+    <div class="page-body">
+      <p>
+        当ブログに関するご質問・ご感想・取材やお仕事のご依頼などは、下記メールアドレスまでご連絡ください。
+      </p>
+      <p style="font-size:1.1rem; margin: 1.5em 0;">
+        <a href="mailto:your-email@example.com">your-email@example.com</a>
+      </p>
+      <p style="color: var(--color-text-muted); font-size: 0.85rem;">
+        ※ 上記アドレスは仮のものです。実際に使うメールアドレスに書き換えてください
+        （<code>src/pages/contact.astro</code> 内の <code>your-email@example.com</code> を変更）。<br />
+        Googleフォーム等の入力フォームを使いたい場合は、フォームのURLへのリンクに差し替えることもできます。
+      </p>
+      <p>
+        内容によってはお返事にお時間をいただく場合や、お答えできない場合がございます。あらかじめご了承ください。
+      </p>
+    </div>
+  </div>
+</BaseLayout>
